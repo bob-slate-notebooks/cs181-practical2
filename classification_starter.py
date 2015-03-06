@@ -233,22 +233,22 @@ def main():
     train_dir = "train"
     test_dir = "test"
     outputfile = "mypredictions.csv"  # feel free to change this or take it as an argument
-    
+
     # TODO put the names of the feature functions you've defined above in this list
     ffs = [first_last_system_call_feats, system_call_count_feats]
-    
+
     # extract features
     print "extracting training features..."
     X_train,global_feat_dict,t_train,train_ids = extract_feats(ffs, train_dir)
     print "done extracting training features"
     print
-    
+
     # TODO train here, and learn your classification parameters
     print "learning..."
     learned_W = np.random.random((len(global_feat_dict),len(util.malware_classes)))
     print "done learning"
     print
-    
+
     # get rid of training data and load test data
     del X_train
     del t_train
@@ -257,13 +257,13 @@ def main():
     X_test,_,t_ignore,test_ids = extract_feats(ffs, test_dir, global_feat_dict=global_feat_dict)
     print "done extracting test features"
     print
-    
+
     # TODO make predictions on text data and write them out
     print "making predictions..."
     preds = np.argmax(X_test.dot(learned_W),axis=1)
     print "done making predictions"
     print
-    
+
     print "writing predictions..."
     util.write_predictions(preds, test_ids, outputfile)
     print "done!"
